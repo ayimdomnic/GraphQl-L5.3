@@ -2,20 +2,15 @@
 
 namespace Ayimdomnic\GraphQl;
 
-use Illuminate\Support\ServiceProvider;
-
-
 class GraphQlServiceProvider extends SeviceProvider
 {
-
     public function boot()
     {
         $this->bootPublishes();
 
         $this->bootTypes();
 
-        if(config('graphql.routes'))
-        {
+        if (config('graphql.routes')) {
             include __DIR__.'/routes.php';
         }
     }
@@ -31,18 +26,13 @@ class GraphQlServiceProvider extends SeviceProvider
         ], 'config');
     }
 
-
     protected function bootTypes()
     {
         $configTypes = config('graphql.types');
-        foreach($configTypes as $name => $type)
-        {
-            if(is_numeric($name))
-            {
+        foreach ($configTypes as $name => $type) {
+            if (is_numeric($name)) {
                 $this->app['graphql']->addType($type);
-            }
-            else
-            {
+            } else {
                 $this->app['graphql']->addType($type, $name);
             }
         }
@@ -50,8 +40,7 @@ class GraphQlServiceProvider extends SeviceProvider
 
     public function registerGraphQL()
     {
-        $this->app->singleton('graphql', function($app)
-        {
+        $this->app->singleton('graphql', function ($app) {
             return new GraphQL($app);
         });
     }
@@ -60,5 +49,4 @@ class GraphQlServiceProvider extends SeviceProvider
     {
         $this->registerGraphQL();
     }
-
 }

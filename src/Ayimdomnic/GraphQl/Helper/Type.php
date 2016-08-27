@@ -3,16 +3,13 @@
  * Created by PhpStorm.
  * User: ayimdomnic
  * Date: 8/27/2016
- * Time: 3:00 AM
+ * Time: 3:00 AM.
  */
-
 namespace Ayimdomnic\GraphQl\Helper;
-use Illuminate\Support\Fluent;
-use GraphQL\Type\Definition\ObjectType;
+
 use GraphQL\Type\Definition\InputObjectType;
-use GraphQL\Type\Definition\InterfaceType;
-
-
+use GraphQL\Type\Definition\ObjectType;
+use Illuminate\Support\Fluent;
 
 class Type extends Fluent
 {
@@ -38,40 +35,31 @@ class Type extends Fluent
     protected function getFieldResolver($name, $field)
     {
         $resolveMethod = 'resolve'.studly_case($name).'Field';
-        if(isset($field['resolve']))
-        {
+        if (isset($field['resolve'])) {
             return $field['resolve'];
-        }
-        else if(method_exists($this, $resolveMethod))
-        {
-            $resolver = array($this, $resolveMethod);
-            return function() use ($resolver)
-            {
+        } elseif (method_exists($this, $resolveMethod)) {
+            $resolver = [$this, $resolveMethod];
+
+            return function () use ($resolver) {
                 $args = func_get_args();
+
                 return call_user_func_array($resolver, $args);
             };
         }
-
-        return null;
     }
 
     public function getFields()
     {
         $fields = $this->fields();
         $allFields = [];
-        foreach($fields as $name => $field)
-        {
-            if(is_string($field))
-            {
+        foreach ($fields as $name => $field) {
+            if (is_string($field)) {
                 $field = app($field);
                 $field->name = $name;
                 $allFields[$name] = $field->toArray();
-            }
-            else
-            {
+            } else {
                 $resolver = $this->getFieldResolver($name, $field);
-                if($resolver)
-                {
+                if ($resolver) {
                     $field['resolve'] = $resolver;
                 }
                 $allFields[$name] = $field;
@@ -80,6 +68,7 @@ class Type extends Fluent
 
         return $allFields;
     }
+
     /**
      * Get the attributes from the container.
      *
@@ -93,16 +82,16 @@ class Type extends Fluent
         $attributes = array_merge($this->attributes, [
             'fields' => function () {
                 return $this->getFields();
-            }
+            },
         ], $attributes);
 
-        if(sizeof($interfaces))
-        {
+        if (count($interfaces)) {
             $attributes['interfaces'] = $interfaces;
         }
 
         return $attributes;
     }
+
     /**
      * Convert the Fluent instance to an array.
      *
@@ -115,32 +104,38 @@ class Type extends Fluent
 
     public function toType()
     {
-        if($this->inputObject)
-        {
+        if ($this->inputObject) {
             return new InputObjectType($this->toArray());
         }
+
         return new ObjectType($this->toArray());
     }
+
     /**
      * Dynamically retrieve the value of an attribute.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function __get($key)
     {
         $attributes = $this->getAttributes();
-        return isset($attributes[$key]) ? $attributes[$key]:null;
+
+        return isset($attributes[$key]) ? $attributes[$key] : null;
     }
+
     /**
      * Dynamically check if an attribute is set.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return void
      */
     public function __isset($key)
     {
         $attributes = $this->getAttributes();
+
         return isset($attributes[$key]);
     }
 }

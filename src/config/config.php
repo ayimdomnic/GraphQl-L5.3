@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ayimdomnic
  * Date: 8/27/2016
- * Time: 12:51 AM
+ * Time: 12:51 AM.
  */
 
 return [
@@ -22,7 +22,7 @@ return [
         ],
         'mutation' => [
 
-        ]
+        ],
     ],
 
 
@@ -31,7 +31,7 @@ return [
     ],
 
 
-    'error_formatter' => ['\Ayimdomnic\GraphQL\GraphQL', 'formatError']
+    'error_formatter' => ['\Ayimdomnic\GraphQL\GraphQL', 'formatError'],
 
 
 ];
