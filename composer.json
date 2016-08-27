@@ -14,5 +14,18 @@
             "name": "Ayimdomnic",
             "email": "Ayimdomnic@statuscreative.co.ke"
         }
-    ]
+    ],
+    "require-dev": {
+        "orchestra/testbench": "~3.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Ayimdomnic\\GraphQl\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    }
 }
