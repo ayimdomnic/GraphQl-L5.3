@@ -2,8 +2,8 @@
 
 namespace Ayimdomnic\GraphQl;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class GraphQlController extends Controller
 {
@@ -12,8 +12,7 @@ class GraphQlController extends Controller
         $query = $request->get('query');
         $params = $request->get('params');
 
-        if(is_string($params))
-        {
+        if (is_string($params)) {
             $params = json_decode($params, true);
         }
 
