@@ -8,5 +8,11 @@ After the Developer Workshop in Nairobi, I have resolved to Move from Rest to Gr
 
 #Instalation
 
+1. `composer require ayimdomnic/graph-ql-l5.3`
+2. add `Ayimdomnic\GraphQl\GraphQlServiceProvider::class,` to `config/app`
+3. add `'GraphQl' => 'Ayimdomnic\GraphQl\Helper\Facade\GraphQl',` to the Facades
+4. publish `php artisan vendor:publish`
+5. 
+
 
 
