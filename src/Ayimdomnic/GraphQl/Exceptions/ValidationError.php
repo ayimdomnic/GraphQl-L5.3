@@ -3,17 +3,11 @@
  * Created by PhpStorm.
  * User: Ayimdomnic
  * Date: 8/27/2016
- * Time: 5:12 AM
+ * Time: 5:12 AM.
  */
-
 namespace Ayimdomnic\GraphQl\Exceptions;
 
-
-
 use GraphQL\Error;
-use GraphQL\FormattedError;
-
-
 
 class ValidationError extends Error
 {
@@ -28,7 +22,6 @@ class ValidationError extends Error
 
     public function getValidatorMessages()
     {
-        return $this->validator ? $this->validator->messages():[];
+        return $this->validator ? $this->validator->messages() : [];
     }
-
 }
