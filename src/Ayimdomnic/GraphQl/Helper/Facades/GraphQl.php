@@ -13,5 +13,8 @@ use Illuminate\Support\Facades\Facade;
 
 class GraphQl extends Facade
 {
-
+    protected static function getFacadeAccessor()
+    {
+        return 'graphql';
+    }
 }
