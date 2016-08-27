@@ -15,6 +15,9 @@ class GraphQlServiceProvider extends SeviceProvider
         }
     }
 
+    /**
+     * this publishes the GraphQl config file
+     */
     protected function bootPublishes()
     {
         $configPath = __DIR__.'/../../config';
@@ -26,6 +29,9 @@ class GraphQlServiceProvider extends SeviceProvider
         ], 'config');
     }
 
+    /**
+     * this handles the type
+     */
     protected function bootTypes()
     {
         $configTypes = config('graphql.types');
@@ -38,6 +44,9 @@ class GraphQlServiceProvider extends SeviceProvider
         }
     }
 
+    /**
+     *
+     */
     public function registerGraphQL()
     {
         $this->app->singleton('graphql', function ($app) {
@@ -45,6 +54,9 @@ class GraphQlServiceProvider extends SeviceProvider
         });
     }
 
+    /**
+     *
+     */
     public function register()
     {
         $this->registerGraphQL();

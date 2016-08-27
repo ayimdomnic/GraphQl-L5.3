@@ -1,6 +1,8 @@
 <?php
 
 
+use Illuminate\Routing\Route;
+
 Route::group([
     'prefix'     => config('graphql.prefix'),
     'middleware' => config('graphql.middleware', []),
