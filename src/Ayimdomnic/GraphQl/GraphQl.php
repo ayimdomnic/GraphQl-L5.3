@@ -1,30 +1,23 @@
 <?php
 
-
-
 namespace Ayimdomnic\GraphQl;
 
-use GraphQL\GraphQL as GraphQLBase;
-
-use GraphQL\Schema;
-use GraphQL\Error;
-
-use GraphQL\Type\Definition\ObjectType;
-
-use GraphQL\Type\Definition\InterfaceType;
-
 use Ayimdomnic\GraphQl\Exceptions\ValidationError;
+use GraphQL\Error;
+use GraphQL\GraphQL as GraphQLBase;
+use GraphQL\Schema;
+use GraphQL\Type\Definition\InterfaceType;
+use GraphQL\Type\Definition\ObjectType;
 
 class GraphQl
 {
     protected $app;
 //    protected $instance;
 
-    protected $mutations =[];
-    protected $queries =[];
+    protected $mutations = [];
+    protected $queries = [];
     protected $types = [];
-    protected $typesInstances =[];
-
+    protected $typesInstances = [];
 
     public function __construct($app, $instance)
     {
@@ -37,30 +30,27 @@ class GraphQl
         $this->typesInstances = [];
 
         $schema = config('graphql.schema');
-        if($schema instanceof Schema)
-        {
+        if ($schema instanceof Schema) {
             return $schema;
         }
 
-        $configQuery = array_get($schema, 'query',[]);
-        $configMutation = array_get($schema,'mutation'.[]);
+        $configQuery = array_get($schema, 'query', []);
+        $configMutation = array_get($schema, 'mutation'.[]);
 
-        if(is_string($configQuery))
-        {
+        if (is_string($configQuery)) {
             $queryType = $this->buildTypeFromFields($configQuery,
                 [
-                    'name'=> 'Query'
+                    'name' => 'Query',
                 ]
             );
         }
-        if(is_string($configMutation))
-        {
-            $mutationType = $this->app->make($configMutation)-toType();
+        if (is_string($configMutation)) {
+            $mutationType = $this->app->make($configMutation) - toType();
         } else {
             $mutationFields = array_merge($configMutation, $this->mutations);
 
             $mutationType = $this->buildTypeFromFields($mutationFields, [
-                'name' => 'Mutation'
+                'name' => 'Mutation',
             ]);
         }
 
@@ -76,7 +66,6 @@ class GraphQl
         $typeFields = [];
 
         foreach ($fields as $key => $field) {
-
             if (is_string($field)) {
                 $typeFields[$key] = app($field)->toArray();
             } else {
@@ -85,7 +74,7 @@ class GraphQl
         }
 
         return new ObjectType(array_merge([
-            'fields' => typeFields
+            'fields' => typeFields,
         ], $options));
     }
 
@@ -93,75 +82,68 @@ class GraphQl
     {
         $executionResult = $this->queryAndReturnResult($query, $params);
 
-        if (!empty($executionResult->errors))
-        {
+        if (!empty($executionResult->errors)) {
             $errorFormatter = config('graphql.error_formatter', ['\Folklore\GraphQL', 'formatError']);
 
             return [
-                'data' => $executionResult->data,
-                'errors' => array_map($errorFormatter, $executionResult->errors)
+                'data'   => $executionResult->data,
+                'errors' => array_map($errorFormatter, $executionResult->errors),
             ];
-        }
-        else
-        {
+        } else {
             return [
-                'data' => $executionResult->data
+                'data' => $executionResult->data,
             ];
         }
     }
 
-        public function queryAndReturnResult($query, $params = [])
+    public function queryAndReturnResult($query, $params = [])
     {
         $schema = $this->schema();
         $result = GraphQLBase::executeAndReturnResult($schema, $query, null, $params);
+
         return $result;
     }
 
-        public function addMutation($name, $mutator)
+    public function addMutation($name, $mutator)
     {
         $this->mutations[$name] = $mutator;
     }
 
-        public function addQuery($name, $query)
+    public function addQuery($name, $query)
     {
         $this->queries[$name] = $query;
     }
 
-        public function addType($class, $name = null)
+    public function addType($class, $name = null)
     {
-        if(!$name)
-        {
-            $type = is_object($class) ? $class:app($class);
+        if (!$name) {
+            $type = is_object($class) ? $class : app($class);
             $name = $type->name;
         }
 
         $this->types[$name] = $class;
     }
 
-        public function type($name, $fresh = false)
+    public function type($name, $fresh = false)
     {
-        if(!isset($this->types[$name]))
-        {
+        if (!isset($this->types[$name])) {
             throw new \Exception('Type '.$name.' not found.');
         }
 
-        if(!$fresh && isset($this->typesInstances[$name]))
-        {
+        if (!$fresh && isset($this->typesInstances[$name])) {
             return $this->typesInstances[$name];
         }
 
         $type = $this->types[$name];
-        if(!is_object($type))
-        {
+        if (!is_object($type)) {
             $type = app($type);
         }
 
         $instance = $type->toType();
         $this->typesInstances[$name] = $instance;
 
-        #Find available intefaces for the object
-        if($type->interfaces)
-        {
+        //Find available intefaces for the object
+        if ($type->interfaces) {
             InterfaceType::addImplementationToInterfaces($instance);
         }
 
@@ -171,25 +153,21 @@ class GraphQl
     public static function formatError(Error $e)
     {
         $error = [
-            'message' => $e->getMessage()
+            'message' => $e->getMessage(),
         ];
 
         $locations = $e->getLocations();
-        if(!empty($locations))
-        {
-            $error['locations'] = array_map(function($loc)
-            {
+        if (!empty($locations)) {
+            $error['locations'] = array_map(function ($loc) {
                 return $loc->toArray();
             }, $locations);
         }
 
         $previous = $e->getPrevious();
-        if($previous && $previous instanceof ValidationError)
-        {
+        if ($previous && $previous instanceof ValidationError) {
             $error['validation'] = $previous->getValidatorMessages();
         }
 
         return $error;
     }
-
 }
