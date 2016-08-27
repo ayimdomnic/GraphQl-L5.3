@@ -18,6 +18,7 @@ use Ayimdomnic\GraphQl\Exceptions\ValidationError;
 class GraphQl
 {
     protected $app;
+    protected $instance;
 
     protected $mutations =[];
     protected $queries =[];
@@ -25,10 +26,10 @@ class GraphQl
     protected $typesInstances =[];
 
 
-    public function __construct($app)
+    public function __construct($app, $instance)
     {
         $this->app = $app;
-        //return an instance of the sms
+        $this->instance = $instance;
     }
 
     public function schema()
@@ -46,7 +47,7 @@ class GraphQl
 
         if(is_string($configQuery))
         {
-            $queryType = $this->buildTypeFormFields($configQuery,
+            $queryType = $this->buildTypeFromFields($configQuery,
                 [
                     'name'=> 'Query'
                 ]
@@ -54,7 +55,37 @@ class GraphQl
         }
         if(is_string($configMutation))
         {
-            
+            $mutationType = $this->app->make($configMutation)-toType();
+        } else {
+            $mutationFields = array_merge($configMutation, $this->mutations);
+
+            $mutationType = $this->buildTypeFromFields($mutationFields, [
+                'name' => 'Mutation'
+            ]);
         }
+
+        return new Schema($queryType, $mutationType);
+    }
+
+    protected function buildTypeFromFields($filds, $options = [])
+    {
+        //excute the results of the queue
+//        $excecutionResult = $this->queryAndReturnResult()
+//        dd($excecuteResult);
+
+        $typeFields = [];
+
+        foreach($fields as $key => $field) {
+
+            if (is_string($field)) {
+                $typeFields[$key] = app($field)->toArray();
+            } else {
+                $typeFields[$key] = $field;
+            }
+        }
+
+        return new ObjectType(array_merge([
+            'fields' => typefields
+        ], $options));
     }
 }
