@@ -1,4 +1,5 @@
 <?php
+
 namespace Ayimdomnic\GraphQl\Tests;
 
 abstract class BaseTest extends \Orchestra\Testbench\TestCase
@@ -6,9 +7,10 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
     /**
      * Generate GraphQL Response.
      *
-     * @param  string  $query
-     * @param  array   $variables
-     * @param  boolean $encode
+     * @param string $query
+     * @param array  $variables
+     * @param bool   $encode
+     *
      * @return array|string
      */
     protected function graphqlResponse($query, $variables = [], $encode = false)
@@ -17,13 +19,15 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
         if ($encode) {
             return json_encode($response);
         }
+
         return $response;
     }
 
     /**
      * Get default service providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -32,10 +36,12 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
             \Ayimdomnic\GraphQl\LaravelServiceProvider::class,
         ];
     }
+
     /**
      * Get list of package aliases.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageAliases($app)
@@ -43,7 +49,7 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
         return [
             'GraphQl' => \Ayimdomnic\GraphQl\Helper\Facades\GraphQL::class,
             ];
-            
     }
+
     //define environment Set-Up
 }
