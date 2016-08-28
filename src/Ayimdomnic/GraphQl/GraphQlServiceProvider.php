@@ -16,7 +16,7 @@ class GraphQlServiceProvider extends SeviceProvider
     }
 
     /**
-     * this publishes the GraphQl config file
+     * this publishes the GraphQl config file.
      */
     protected function bootPublishes()
     {
@@ -30,7 +30,7 @@ class GraphQlServiceProvider extends SeviceProvider
     }
 
     /**
-     * this handles the type
+     * this handles the type.
      */
     protected function bootTypes()
     {
@@ -44,9 +44,7 @@ class GraphQlServiceProvider extends SeviceProvider
         }
     }
 
-    /**
-     *
-     */
+
     public function registerGraphQL()
     {
         $this->app->singleton('graphql', function ($app) {
@@ -54,9 +52,7 @@ class GraphQlServiceProvider extends SeviceProvider
         });
     }
 
-    /**
-     *
-     */
+
     public function register()
     {
         $this->registerGraphQL();

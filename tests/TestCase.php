@@ -1,9 +1,9 @@
 <?php
 
-
 namespace Ayimdomnic\GraphQl\Tests;
 
 use TestCase as Test;
+
 /**
  * Created by PhpStorm.
  * User: ayimdomnic
@@ -12,5 +12,4 @@ use TestCase as Test;
  */
 class TestCase extends Test
 {
-	
 }
