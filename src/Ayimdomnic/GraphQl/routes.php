@@ -7,6 +7,7 @@ Route::group([
     'prefix'     => config('graphql.prefix'),
     'middleware' => config('graphql.middleware', []),
 ], function () {
+
     //Routes for GraphQl
     $routes = config('graphql.routes');
     $queryRoute = null;
@@ -20,7 +21,7 @@ Route::group([
     }
 
     //Controllers
-    $controllers = config('graphql.controllers', '\Ayimdomnic\GraphQl\GraphQlController@query');
+    $controllers = config('graphql.controllers', '\Ayimdomnic\GraphQl\GraphQlController@inquire');
     $queryController = null;
     $mutationController = null;
     if (is_array($controllers)) {

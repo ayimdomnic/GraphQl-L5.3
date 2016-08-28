@@ -61,4 +61,16 @@ class GraphQlServiceProvider extends SeviceProvider
     {
         $this->registerGraphQL();
     }
+
+    // public function deregister()
+    // {
+    //     $this->deregisterGraphQl();
+    // }
+
+    // public function deregisterGraphQl()
+    // {
+    //     $this->app->singleton('graphql', function ($app){
+    //         return is_null($app);
+    //     });
+    // }
 }

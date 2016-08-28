@@ -15,4 +15,9 @@ class GraphQl extends Facade
     {
         return 'graphql';
     }
+
+    // protected static function getallheaders(oid)
+    // {
+    // 	//here gors the code
+    // }
 }
