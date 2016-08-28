@@ -42,6 +42,7 @@ abstract class BaseTest extends \Orchestra\Testbench\TestCase
     {
         return [
             'GraphQl' => \Ayimdomnic\GraphQl\Helper\Facades\GraphQL::class,
+            ];
             
     }
     //define environment Set-Up
