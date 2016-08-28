@@ -14,8 +14,11 @@ After the Developer Workshop in Nairobi, I have resolved to Move from Rest to Gr
 4. publish `php artisan vendor:publish`
 
 #Usage
+- [Creating a query](#creating-a-query)
+- [Creating a mutation](#creating-a-mutation)
+- [Adding validation to mutation](#adding-validation-to-mutation)
  
-##Creating a Query
+#Creating a Query(#creating-a-query)
 ```php
 
 	namespace App\GraphQL\Type;
