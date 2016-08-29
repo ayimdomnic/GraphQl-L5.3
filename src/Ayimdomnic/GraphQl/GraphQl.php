@@ -72,6 +72,7 @@ class GraphQl
                 $typeFields[$key] = $field;
             }
         }
+        //dd($typeFields);
 
         return new ObjectType(array_merge([
             'fields' => typeFields,
@@ -94,6 +95,7 @@ class GraphQl
                 'data' => $executionResult->data,
             ];
         }
+        dd($executionResult);
     }
 
     public function queryAndReturnResult($query, $params = [])

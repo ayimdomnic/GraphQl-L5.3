@@ -8,7 +8,7 @@ Route::group([
     'middleware' => config('graphql.middleware', []),
 ], function () {
 
-    //Routes for GraphQl
+    ##########################GraphQL#############ROUTES################
     $routes = config('graphql.routes');
     $queryRoute = null;
     $mutationRoute = null;
@@ -20,7 +20,7 @@ Route::group([
         $mutationRoute = $routes;
     }
 
-    //Controllers
+    ##########################INQUIRE#####################################
     $controllers = config('graphql.controllers', '\Ayimdomnic\GraphQl\GraphQlController@inquire');
     $queryController = null;
     $mutationController = null;
@@ -32,7 +32,7 @@ Route::group([
         $mutationController = $controllers;
     }
 
-    // this is the query route
+    ########################################QUERY METHOD##########################
     if ($queryRoute) {
         Route::get($queryRoute, [
             'as'   => 'graphql.query',
@@ -41,7 +41,7 @@ Route::group([
     }
 
     if ($mutationRoute) {
-        //this is the route for mutation
+        ####################################MUTATION ROUTE##############################
         Route::post($mutationRoute, [
             'as'   => 'graphql.mutation',
             'uses' => $mutationController,
