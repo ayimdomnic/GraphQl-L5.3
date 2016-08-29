@@ -21,10 +21,10 @@ After the Developer Workshop in Nairobi, I have resolved to Move from Rest to Gr
 #Creating a Query(#creating-a-query)
 ```php
 
-	namespace App\GraphQL\Type;
+	namespace App\GraphQl\Type;
 	
 	use GraphQL\Type\Definition\Type;
-	use Ayimdomnic\GraphQL\Helper\Type as GraphQLType;
+	use Ayimdomnic\GraphQl\Helper\Type as GraphQLType;
     
     class UserType extends GraphQLType {
         
@@ -48,8 +48,8 @@ After the Developer Workshop in Nairobi, I have resolved to Move from Rest to Gr
 		}
 			
 			
-		// If you want to resolve the field yourself, you can declare a method
-		// with the following format resolve[FIELD_NAME]Field()
+		#########If you want to resolve the field yourself, you can declare a method
+		###################with the following format resolve[FIELD_NAME]Field()
 		protected function resolveEmailField($root, $args)
 		{
 			return strtolower($root->email);
