@@ -9,4 +9,5 @@ namespace Ayimdomnic\GraphQl\Helper;
 
 class Query
 {
+
 }

@@ -7,7 +7,7 @@
  */
 namespace Ayimdomnic\GraphQl\Exceptions;
 
-use GraphQL\Error;
+use GraphQl\Error;
 
 class ValidationError extends Error
 {

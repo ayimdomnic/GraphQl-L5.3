@@ -2,7 +2,9 @@
 
 namespace Ayimdomnic\GraphQl\Tests;
 
-abstract class BaseTest extends \Orchestra\Testbench\TestCase
+use Orchestra\Testbench\TestCase;
+
+abstract class BaseTest extends TestCase
 {
     /**
      * Generate GraphQL Response.
